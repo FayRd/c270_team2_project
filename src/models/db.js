@@ -1,11 +1,13 @@
 const mysql = require('mysql');
+const path = require('path');
+const db = require(`${path.join(__dirname, '/config.json')}`).database;
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'recipe',
-    port: 3306
+    host: db.host,
+    user: db.user,
+    password: db.password,
+    database: db.database,
+    port: db.port
 });
 
 connection.connect((err) => {

@@ -1,0 +1,9 @@
+{
+    "database": {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "name": "c270_team2_project",
+        "port": "3306"
+    }
+}
