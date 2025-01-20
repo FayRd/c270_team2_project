@@ -26,6 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', require('./src/routes/homeRoutes'));
+app.use('/', require('./src/routes/savesRoutes'));
+app.use('/', require('./src/routes/reviewsRoutes'));
+
 
 // Start server
 app.listen(PORT, () => {
