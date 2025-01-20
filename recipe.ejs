@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/stylesheet/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <title>Recipe Details</title>
+    <style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.table th {
+  background-color: #17a2b8;
+  color: white;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+}
+
+.btn-outline-info:hover {
+  color: #fff;
+  background-color: #17a2b8;
+}
+
+.btn-success:hover {
+  background-color: #28a745;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+  border: none;
+}
+</style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <%- include('partials/navbar') %>
+
+    <!-- Main Content -->
+    <main>
+      <section>
+        <div class="container my-4">
+          <h2 class="text-center">Recipe Details</h2>
+
+          <!-- General Information -->
+          <div class="row shadow-sm border rounded p-4 mb-4">
+            <div class="col-md-6">
+              <h5 class="mb-3">General Information</h5>
+              <p><strong>ID:</strong> <%= recipe.idMeal %></p>
+              <p><strong>Name:</strong> <%= recipe.strMeal %></p>
+              <p><strong>Alternate Drink:</strong> <%= recipe.strDrinkAlternate || "NIL" %></p>
+              <p><strong>Category:</strong> <%= recipe.strCategory %></p>
+              <p><strong>Area:</strong> <%= recipe.strArea %></p>
+              <p><strong>Youtube:</strong> <a href="<%= recipe.strYoutube %>" target="_blank">Watch Video</a></p>
+
+              <!-- Review Form -->
+              <div class="mt-4">
+                <form>
+                  <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Leave Your Review</label>
+                  </div>
+                  <div class="btn-group">
+                    <a href="/<%= recipe.idMeal %>/reviews" class="btn btn-outline-info">View Reviews</a>
+                    <button type="button" class="btn btn-success">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Recipe Image -->
+            <div class="col-md-6 text-center">
+              <img src="<%= recipe.strMealThumb %>" alt="<%= recipe.strMeal %>" class="rounded shadow img-fluid" style="max-width: 100%;" />
+            </div>
+          </div>
+
+          <!-- Ingredients and Instructions -->
+          <div class="row shadow-sm border rounded p-4">
+            <div class="col-md-6">
+              <h5 class="mb-3">Ingredients</h5>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Ingredient</th>
+                    <th>Measurement</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for (let i = 1; i <= 20; i++) { %>
+                    <% if (recipe[`strIngredient${i}`]) { %>
+                      <tr>
+                        <td><%= i %></td>
+                        <td><%= recipe[`strIngredient${i}`] %></td>
+                        <td><%= recipe[`strMeasure${i}`] %></td>
+                      </tr>
+                    <% } %>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Instructions -->
+            <div class="col-md-6">
+              <h5 class="mb-3">Instructions</h5>
+              <ul class="list-group list-group-flush">
+                <% recipe.strInstructions.split('.').forEach((step, index) => { %>
+                  <% if (step.trim()) { %>
+                    <li class="list-group-item"><%= index + 1 %>. <%= step.trim() %></li>
+                  <% } %>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <%- include('partials/footer') %>
+    </footer>
+  </body>
+</html>
