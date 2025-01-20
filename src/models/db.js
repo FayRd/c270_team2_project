@@ -1,14 +1,13 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const path = require('path');
-const db = require(`${path.join(__dirname, '/config.json')}`).database;
+const db = require(`../../config.json`).database;
 
 const connection = mysql.createConnection({
-    host: db.host,
-    user: db.user,
-    password: db.password,
-    database: db.database,
-    port: db.port
-});
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'recipe_finder',
+  });
 
 connection.connect((err) => {
     if (err) {

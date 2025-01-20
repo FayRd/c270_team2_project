@@ -3,7 +3,7 @@
         "host": "localhost",
         "user": "root",
         "password": "",
-        "name": "c270_team2_project",
+        "name": "recipe_finder",
         "port": "3306"
     }
 }
