@@ -5,7 +5,6 @@ const getRecipeList = require('../services/getRecipeList');
 
 router.get('/', async (req, res) => {
     const recipeList = await getRecipeList();
-    console.log(recipeList)
     res.render('index', { recipeList });
 });
 
