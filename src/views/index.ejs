@@ -66,10 +66,10 @@
       <!-- Body -->
       <div class="container my-4 p-4 rounded-3 shadow-md secondary-color">
         <div class="col-12">
-          <form>
+          <form action="/search" method="POST">
             <div class="input-group w-50 mx-auto">
-              <input type="text" class="form-control" placeholder="Search for recipes" aria-label="Search for recipes" aria-describedby="button-addon2" />
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+              <input name="query" type="text" class="form-control" placeholder="Search for recipes" aria-label="Search for recipes" aria-describedby="button-addon2" />
+              <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
             </div>
           </form>
           <div class="mx-auto my-4 text-center">Find over 1000+ unique recipes!</div>
