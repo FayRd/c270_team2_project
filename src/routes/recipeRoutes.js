@@ -5,6 +5,7 @@ const { isAuthenticated } = require('../models/auth');
 const getRecipeById = require('../services/getRecipeById');
 const parseInstructions = require('../services/parseInstructions');
 const getRecipeReviews = require('../services/getRecipeReviews');
+const sendReview = require('../services/sendReview');
 
 let recipeObj = {};
 
@@ -30,5 +31,15 @@ router.get('/:id/reviews', isAuthenticated, async (req, res) => {
     const recipe = recipeObj.recipe
     res.render('allReviews', { recipe, reviews });
 });
+
+router.post('/:id/submitReview', isAuthenticated, async (req, res) => {
+    const recipeId = req.params.id;
+    const accountId = req.session.userId;
+    const contents = req.body.contents;
+    console.log(`Parameters: ${accountId} | ${recipeId} | ${contents}`)
+    sendReview(accountId, recipeId, contents)
+    console.log(`Review sent by ${req.session.username}`)
+    res.redirect(`/${recipeId}/reviews`)
+})
 
 module.exports = router;

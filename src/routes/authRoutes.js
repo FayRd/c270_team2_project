@@ -20,9 +20,11 @@ router.post('/loginAccount', (req, res) => {
         } else {
             if (results.length > 0) {
                 // User Authenticated
+                req.session.userId = results[0].id
                 req.session.username = login_username;
                 req.session.loggedIn = true;
                 res.redirect('/');
+                console.log(`Logged in successfully.\nID: ${req.session.userId } | Username: ${req.session.username}`)
             } else {
                 // Invalid 
                 res.render('login', { error: "Invalid username or password. Please try again." });
@@ -55,9 +57,7 @@ router.post('/registerAccount', (req, res) => {
             }
         } else {
             console.log('User registered successfully.');
-            req.session.username = register_username;
-            req.session.loggedIn = true;
-            res.redirect('/');
+            res.redirect('login');
         }
     });
 });
@@ -67,7 +67,7 @@ router.get('/logout',(req,res)=>{
         if(err){
             console.err("Error destroying the session: ",err);
         }
-        res.redirect('/login');
+        res.redirect('login');
     });
 })
 
