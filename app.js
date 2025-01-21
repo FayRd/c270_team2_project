@@ -25,6 +25,7 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+app.use('/', require('./src/routes/authRoutes'));
 app.use('/', require('./src/routes/homeRoutes'));
 app.use('/', require('./src/routes/savesRoutes'));
 app.use('/', require('./src/routes/reviewsRoutes'));

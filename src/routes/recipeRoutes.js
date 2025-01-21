@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const { isAuthenticated } = require('../models/auth');
 const getRecipeById = require('../services/getRecipeById');
 const parseInstructions = require('../services/parseInstructions');
 const getRecipeReviews = require('../services/getRecipeReviews');
 
 let recipeObj = {};
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
     const recipeId = req.params.id;
     const recipe = await getRecipeById(recipeId);
     const instructions = parseInstructions(recipe);
@@ -16,7 +17,7 @@ router.get('/:id', async (req, res) => {
     res.render('recipe', { recipe, instructions });
 });
 
-router.get('/:id/reviews', async (req, res) => {
+router.get('/:id/reviews', isAuthenticated, async (req, res) => {
     const recipeId = req.params.id;
     if (Object.keys(recipeObj).length === 0) {
         const recipe = await getRecipeById(recipeId);
