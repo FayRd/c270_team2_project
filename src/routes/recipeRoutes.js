@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { isAuthenticated } = require('../models/auth');
+
 const getRecipeById = require('../services/getRecipeById');
 const parseInstructions = require('../services/parseInstructions');
 const getRecipeReviews = require('../services/getRecipeReviews');
@@ -14,7 +15,7 @@ router.get('/:id', isAuthenticated, async (req, res) => {
     const recipe = await getRecipeById(recipeId);
     const instructions = parseInstructions(recipe);
     recipeObj.recipe = recipe;
-    recipeObj.instructions = instructions
+    recipeObj.instructions = instructions;
     res.render('recipe', { recipe, instructions });
 });
 
@@ -24,11 +25,11 @@ router.get('/:id/reviews', isAuthenticated, async (req, res) => {
         const recipe = await getRecipeById(recipeId);
         const instructions = parseInstructions(recipe);
         recipeObj.recipe = recipe;
-        recipeObj.instructions = instructions
+        recipeObj.instructions = instructions;
     }
 
-    const reviews =  await getRecipeReviews(res, recipeId);
-    const recipe = recipeObj.recipe
+    const reviews = await getRecipeReviews(res, recipeId);
+    const recipe = recipeObj.recipe;
     res.render('allReviews', { recipe, reviews });
 });
 
@@ -36,10 +37,11 @@ router.post('/:id/submitReview', isAuthenticated, async (req, res) => {
     const recipeId = req.params.id;
     const accountId = req.session.userId;
     const contents = req.body.contents;
-    console.log(`Parameters: ${accountId} | ${recipeId} | ${contents}`)
-    sendReview(accountId, recipeId, contents)
-    console.log(`Review sent by ${req.session.username}`)
-    res.redirect(`/${recipeId}/reviews`)
-})
+    console.log(`Parameters: ${accountId} | ${recipeId} | ${contents}`);
+    sendReview(accountId, recipeId, contents);
+    console.log(`Review sent by ${req.session.username}`);
+    res.redirect(`/${recipeId}/reviews`);
+});
+
 
 module.exports = router;

@@ -36,12 +36,15 @@
               Category: <%= recipe.strCategory %><br>
               Area: <%= recipe.strArea %><br>
               Youtube: <a href="<%= recipe.strYoutube %>">Video</a>
+              <form action="/<%= recipe.idMeal %>/save" method="POST">
+                <button type="button" href="/<%= recipe.idMeal %>/save" class="btn btn-outline-warning mt-2">Save</button>
+              </form>
               <div class="border my-4"></div>
               <!-- Review -->
               <div>
                 <form action="/<%= recipe.idMeal %>/submitReview" method="POST">
                   <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="contents"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="contents" required></textarea>
                     <label for="floatingTextarea2">Leave Your Review</label>
                   </div>
                   <div class="btn-group" role="group" aria-label="Basic example">
