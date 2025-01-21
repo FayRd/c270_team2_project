@@ -7,7 +7,6 @@ const searchRecipe = async (query) => {
     if (data.meals === null) {
         return null;
     }
-    console.log(data);
     return data.meals[0];
 };
 
