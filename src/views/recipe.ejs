@@ -76,9 +76,11 @@
             <!-- Instructions -->
             <div class="col-sm-6 mb-3 mb-sm-0">
               <ul class="list-group list-group-flush">
-                <% for (let i=1; i<instructions.length; i++) { %>
-                  <li class="list-group-item"><%= i %>. <%= instructions[i] %></li>
-                <% }%>
+                <% if (instructions !== null) { %>
+                  <% for (let i=0; i<instructions.length; i++) { %>
+                    <li class="list-group-item"><%= i+1 %>. <%= instructions[i] %></li>
+                  <% }%>
+                <% } %>
               </ul>
             </div>
           </div>
