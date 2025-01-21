@@ -45,7 +45,7 @@
                     <label for="floatingTextarea2">Leave Your Review</label>
                   </div>
                   <div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" href="/<%= recipe.idMeal %>/reviews" class="btn btn-outline-info">View Reviews</a>
+                    <a type="button" href="/<%= recipe.idMeal %>" class="btn btn-outline-info">Return</a>
                     <button type="button" class="btn btn-success">Submit</button>
                   </div>
                 </form>
@@ -57,12 +57,27 @@
           </div>
 
           <!-- Details -->
-          <div class="row mb-4 mx-4 p-3 mx-auto border shadow-sm">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-              <%= reviews[0].date_created %>
-              <%= reviews[0].contents %>
+          <% let count = reviews.length - 1 %>
+          <% for (let i=0; i<reviews.length/2; i++) { %>
+            <div class="row mb-4 mx-4 p-3 mx-auto border shadow-sm">
+              <% for (let j=0; j<2; j++) { %>
+                <% if (count !== -1) { %>
+                  <div class="col-sm-6 mb-3 mb-sm-0 p-2 mx-auto">
+                    <div class="border rounded-2 shadow-sm p-4 h-100">
+                      <div>
+                        Username: <%= reviews[count].username %><br>
+                        Date Created: <%= new Intl.DateTimeFormat('en-SG', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(reviews[count].date_created)) %><br>
+                      </div>
+                      <div class="border rounded-2 p-2 my-2">
+                        <%= reviews[count].contents %>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+                <% count-- %> 
+              <% } %>
             </div>
-          </div>
+          <% } %>
         </div>
       </section>
     </main>

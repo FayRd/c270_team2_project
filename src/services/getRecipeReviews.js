@@ -2,15 +2,18 @@
 const connection = require('../models/db');
 
 const getRecipeReviews = async (res, recipeId) => {
-    const sql = `SELECT * FROM reviews WHERE recipe_id = ?`;
-    connection.query(sql, [recipeId], (err, results) => {
+    const sql = `SELECT * FROM reviews INNER JOIN accounts ON reviews.account_id = accounts.id WHERE recipe_id = ?;`;
+    const results = await new Promise((resolve, reject) => {
+      connection.query(sql, [recipeId], (err, results) => {
         if (err) {
-            console.error(`Database query error: ${err.message}`);
-            return res.status(500).send(`Error Retrieving reviews!`);
+          reject(err);
+        } else {
+          resolve(results);
         }
-        return results;
+      });
     });
-};
+    return results;
+  };
 
 module.exports = getRecipeReviews;
 

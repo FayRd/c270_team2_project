@@ -26,7 +26,6 @@ router.get('/:id/reviews', async (req, res) => {
     }
 
     const reviews =  await getRecipeReviews(res, recipeId);
-    console.log(reviews)
     const recipe = recipeObj.recipe
     res.render('allReviews', { recipe, reviews });
 });
