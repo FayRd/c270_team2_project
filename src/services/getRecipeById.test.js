@@ -5,7 +5,7 @@ global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({
       meals: [{
-        idMeal: "12345",
+        idMeal: "53010",
         strMeal: "Mocked Recipe",
         strCategory: "Mocked Category",
         strInstructions: "Mocked Instructions"
@@ -15,14 +15,14 @@ global.fetch = jest.fn(() =>
 );
 
 test('retrieves a recipe using its ID', async () => {
-  const recipe = await getRecipeById("12345"); // Simulating API call
+  const recipe = await getRecipeById("53010"); // Simulating API call
 
   expect(recipe).toEqual({
-    idMeal: "12345",
+    idMeal: "53010",
     strMeal: "Mocked Recipe",
     strCategory: "Mocked Category",
     strInstructions: "Mocked Instructions"
   });
 
-  expect(fetch).toHaveBeenCalledWith("https://www.themealdb.com/api/json/v1/1/lookup.php?i=12345");
+  expect(fetch).toHaveBeenCalledWith("https://www.themealdb.com/api/json/v1/1/lookup.php?i=53010");
 });
