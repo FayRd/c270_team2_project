@@ -3,10 +3,10 @@ const path = require('path');
 const db = require(`../../config.json`).database;
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'recipe_finder',
+    host: db.host,
+    user: db.user,
+    password: db.password,
+    database: db.name,
   });
 
 connection.connect((err) => {

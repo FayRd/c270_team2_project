@@ -1,4 +1,6 @@
 // Returns a list of 6 random recipes
+const fetch = require('node-fetch');
+
 const getRecipeList = async () => {
     let list = [];
     const api_url = `https://www.themealdb.com/api/json/v1/1/random.php`;
