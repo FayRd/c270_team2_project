@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf tempdir
 
 mkdir tempdir
 mkdir -p tempdir
