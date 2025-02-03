@@ -5,8 +5,6 @@ mkdir -p tempdir
 mkdir -p tempdir/public/{images,stylesheet}
 mkdir -p tempdir/src/{models,routes,services,views,views/partials}
 
-touch tempdir/Dockerfile
-
 cp app.js tempdir/.
 cp config.json tempdir/.
 cp package.json tempdir/.
