@@ -26,7 +26,7 @@ echo "RUN npm install" >> tempdir/Dockerfile
 echo "RUN npm install node-fetch" >> tempdir/Dockerfile
 echo "COPY . ." >> tempdir/Dockerfile
 echo "EXPOSE 80" >> tempdir/Dockerfile
-echo "CMD ["npm", "start"]" >> tempdir/Dockerfile
+echo "CMD ['npm', 'start']" >> tempdir/Dockerfile
 
 cd tempdir
 
