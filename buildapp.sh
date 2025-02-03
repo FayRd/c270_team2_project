@@ -1,9 +1,11 @@
 #!/bin/bash
 
 mkdir tempdir
-mkdir -p tempdir/Dockerfile
+mkdir -p tempdir
 mkdir -p tempdir/public/{images,stylesheet}
-mkdir -p tempdir/src/{app,config,models,public,templates,utils,static}
+mkdir -p tempdir/src/{models,routes,services,views,views/partials}
+
+touch tempdir/Dockerfile
 
 cp app.js tempdir/.
 cp config.json tempdir/.
@@ -29,7 +31,7 @@ echo "CMD ["npm", "start"]" >> tempdir/Dockerfile
 
 cd tempdir
 
-sudo docker pull -a fayrd/recipe_sql
+docker pull -a fayrd/recipe_sql
 docker build -t recipe_finder .
 
 docker network create my-app-network
