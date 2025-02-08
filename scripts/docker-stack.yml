@@ -29,6 +29,18 @@ services:
     depends_on:
       - mysql
 
+
+  web:
+    image: nginx:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-app-network
+    ports:
+      - "80:80"  # Exposing port 80
+
 networks:
   my-app-network:
 
