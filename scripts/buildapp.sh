@@ -20,6 +20,7 @@ cp -r src/views/* tempdir/src/views/.
 cp -r src/views/partials/* tempdir/src/views/partials/.
 
 echo "FROM node:16-alpine" >> tempdir/Dockerfile
+echo "RUN apk add --no-cache jq" >> tempdir/Dockerfile
 echo "WORKDIR /app" >> tempdir/Dockerfile
 echo "COPY package*.json ./" >> tempdir/Dockerfile
 echo "RUN npm install" >> tempdir/Dockerfile
@@ -45,6 +46,9 @@ until docker exec my-mysql-container mysqladmin ping -h"$SQL_IP" --silent; do
 done
 echo "MySQL is ready!"
 docker run -d -p 80:80 --name my-webapp-container --network my-app-network recipe_finder
+sudo docker exec -it my-webapp-container sh
+vi config.json
+jq --arg ip "$SQL_IP" '.database.host = $ip' config.json > temp.json && mv temp.json config.json
 
 docker ps -a
 docker logs my-webapp-container
