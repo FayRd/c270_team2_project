@@ -36,8 +36,9 @@ docker build -t recipe_finder .
 docker network create my-app-network
 docker run -d -p 3306:3306 --name my-mysql-container --network my-app-network -e MYSQL_ROOT_PASSWORD=123 fayrd/recipe_sql:1.0
 # Wait for MySQL to become ready
+SQL_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-mysql-container)
 echo "Waiting for MySQL to be ready..."
-until docker exec my-mysql-container mysqladmin ping -h"172.18.0.2" --silent; do
+until docker exec my-mysql-container mysqladmin ping -h"$SQL_IP" --silent; do
     sleep 2
     echo "Waiting for MySQL..."
 done
