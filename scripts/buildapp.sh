@@ -35,9 +35,9 @@ docker build -t recipe_finder .
 
 docker network create my-app-network
 docker run -d -p 3306:3306 --name my-mysql-container --network my-app-network -e MYSQL_ROOT_PASSWORD=123 fayrd/recipe_sql:1.0
-sleep 5
 docker run -d -p 80:80 --name my-webapp-container --network my-app-network recipe_finder
 
 docker ps -a
+sleep 5 | echo "Restarting..."
 docker restart my-webapp-container
 docker logs my-webapp-container

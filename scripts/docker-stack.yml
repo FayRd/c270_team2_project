@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: fayrd/recipe_sql:1.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+    networks:
+      - my-app-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  webapp:
+    image: fayrd/recipe_finder:3.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-app-network
+    ports:
+      - "7070:80"
+    depends_on:
+      - mysql
+
+networks:
+  my-app-network:
+
+volumes:
+  mysql_data:
+
