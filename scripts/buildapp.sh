@@ -38,6 +38,6 @@ docker run -d -p 3306:3306 --name my-mysql-container --network my-app-network -e
 docker run -d -p 80:80 --name my-webapp-container --network my-app-network recipe_finder
 
 docker ps -a
-sleep 5 | echo "Restarting..."
+echo "Restarting... | 10 seconds" | sleep 10
 docker restart my-webapp-container
 docker logs my-webapp-container
