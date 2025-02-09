@@ -1,53 +1,46 @@
-node {
-    stage('Preparation') {
-        catchError(buildResult: 'SUCCESS') {
-            echo 'Stopping and removing existing Docker container...'
-            sh 'docker stop samplerunning || true'
-            sh 'docker rm samplerunning || true'
+pipeline {
+    agent any
+    environment {
+        REPO_URL = 'https://github.com/FayRd/c270_team2_project.git'
+        SOURCE_BRANCH = 'fayyadh-dev'
+        TARGET_BRANCH = 'dev'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${SOURCE_BRANCH}", url: "${REPO_URL}"
+            }
+        }
+        stage('Run Build') {
+            steps {
+                build 'BuildAppJob'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                build 'TestAppJob'
+            }
         }
     }
-
-    stage('Build') {
-        parallel(
-            NodeJS: {
-                dir('src') {  
-                    echo 'Installing Node.js dependencies...'
-                    sh 'npm install' 
-                }
-            },
-            JavaApp: {
-                dir('services') { 
-                    echo 'Building Java application with Maven...'
-                    sh 'mvn clean install'  
+    post {
+        success {
+            script {
+                echo "Tests passed. Merging ${SOURCE_BRANCH} into ${TARGET_BRANCH}..."
+                
+                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                    sh """
+                        git config user.email "fayyadhrasid06@gmail.com"
+                        git config user.name "FayRd"
+                        git checkout ${TARGET_BRANCH}
+                        git pull origin ${TARGET_BRANCH}
+                        git merge ${SOURCE_BRANCH}
+                        git push https://$GITHUB_TOKEN@github.com/FayRd/c270_team2_project.git ${TARGET_BRANCH}
+                    """
                 }
             }
-        )
-    }
-
-    stage('Test') {
-        dir('src') {  
-            echo 'Running tests with Jest...'
-            sh 'npm install'
-            sh 'npm test'
-        }
-    }
-
-    stage('Docker Build & Deploy') {
-        echo 'Building and running Docker container...'
-        sh 'docker build -t sampleimage .'
-        sh 'docker run -d --name samplerunning -p 8080:8080 sampleimage'
-    }
-    
-    post {
-        always {
-            echo 'Cleaning up workspace...'
-            sh 'docker system prune -f'
-        }
-        success {
-            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo "Tests failed, merge step will not be executed."
         }
     }
 }
