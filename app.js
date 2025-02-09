@@ -6,7 +6,7 @@ const path = require('path');
 
 // Create express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 
 // Set up middleware
 app.set('view engine', 'ejs');

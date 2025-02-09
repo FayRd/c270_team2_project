@@ -1,8 +1,8 @@
 {
     "database": {
-        "host": "localhost",
+        "host": "172.18.0.2",
         "user": "root",
-        "password": "",
+        "password": "123",
         "name": "recipe_finder",
         "port": "3306"
     }
